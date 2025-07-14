@@ -96,28 +96,28 @@ class WaterParkEnv:
             reward = -1.0
         # 3. 기준 초과 상태에서 물 교체(하나라도 넘었을 때)
         elif (self.state[0] > 0.5 or self.state[1] > 2.8 or self.state[2] < 5.8 or self.state[2] > 8.6) and action == 1:
-            reward = 0.2
+            reward = 0.3
         # 4. 기준 초과 상태에서 물 교체 안함(하나라도 넘었을 때)
         elif (self.state[0] > 0.5 or self.state[1] > 2.8 or self.state[2] < 5.8 or self.state[2] > 8.6) and action == 0:
             reward = -0.2
         # 5. 기준 내에서 물 교체 안함
         elif (self.state[0] <= 0.5 and self.state[1] <= 2.8 and 5.8 <= self.state[2] <= 8.6) and action == 0:
-            reward = 0.7
-        # 6. 기준 내에서 물 교체함
-        elif (self.state[0] <= 0.5 and self.state[1] <= 2.8 and 5.8 <= self.state[2] <= 8.6) and action == 1:
-            reward = -1.0
+            reward = 0.5
+        # # 6. 기준 내에서 물 교체함
+        # elif (self.state[0] <= 0.5 and self.state[1] <= 2.8 and 5.8 <= self.state[2] <= 8.6) and action == 1:
+        #     reward = -1.0
 
         # 교체 한도 초과 시 추가 패널티
         if action == 1 and replace_left <= 0:
             reward -= 0.7
 
-        # 수질 기준 초과 시 에피소드 종료(종료 조건)
-        if (
-            self.state[0] > 0.5 or
-            self.state[1] > 2.8 or
-            self.state[2] < 5.8 or self.state[2] > 8.6
-        ):
-            done = True
+        # # 수질 기준 초과 시 에피소드 종료(종료 조건)
+        # if (
+        #     self.state[0] > 0.5 or
+        #     self.state[1] > 2.8 or
+        #     self.state[2] < 5.8 or self.state[2] > 8.6
+        # ):
+        #     done = True
 
         # 영업 종료(19시) 또는 최대 스텝 도달 시 종료
         if self.state[4] >= self.max_steps or self.steps >= self.max_steps:

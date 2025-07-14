@@ -4,7 +4,7 @@ from env_waterpark import WaterParkEnv
 from agent_waterpark import QAgent, FixedIntervalPolicy, quantize_state
 
 # 주어진 정책으로 여러 에피소드 동안 환경 실행 후 각 에피소드의 총 보상을 리스트로 저장
-def run_policy(env, policy, quantize=False, episodes=5000):
+def run_policy(env, policy, quantize=False, episodes=2000):
     all_rewards = []
     for ep in range(episodes):
         state = env.reset()
@@ -20,7 +20,7 @@ def run_policy(env, policy, quantize=False, episodes=5000):
 
 # Q-Learning 학습 함수
 # Q-Learning 에이전트가 환경에서 1000회 학습
-def train_qlearning(env, agent, episodes=5000):
+def train_qlearning(env, agent, episodes=2000):
     rewards_q = []
     for ep in range(episodes):
         state = env.reset()
@@ -47,9 +47,9 @@ if __name__ == "__main__":
     fixed_policy = FixedIntervalPolicy()
 
     # 기존 정책(30분마다 교체) 에피소드별 보상 저장
-    rewards_fixed = run_policy(env, fixed_policy, quantize=False, episodes=5000)
+    rewards_fixed = run_policy(env, fixed_policy, quantize=False, episodes=2000)
     # Q-러닝 학습 및 에피소드별 보상 저장
-    rewards_q = train_qlearning(env, q_agent, episodes=5000)
+    rewards_q = train_qlearning(env, q_agent, episodes=2000)
 
     # Q-러닝 학습 후, 탐욕 정책으로 평가(20회)
     class GreedyQPolicy:

@@ -60,15 +60,15 @@ class QAgent:
     # epsilon : 탐험률(랜덤)
     # epsilon_min : 탐험률 최소값(후반에 최소 랜덤)
     # epsilon_decay : 감쇠 비율(탐험률 얼마나 줄일지)
-    def __init__(self, state_shape=(2,2,3,5,4), n_actions=2, alpha=0.1, gamma=0.99, epsilon=1.0, epsilon_min=0.05, epsilon_decay=0.995):
+    def __init__(self, state_shape=(2,2,3,5,4), n_actions=2, alpha=0.1, gamma=0.95, epsilon=0.1, epsilon_decay=0.0):
         self.state_shape = state_shape
         self.n_actions = n_actions
         self.Q_table = np.zeros(state_shape + (n_actions,))
         self.alpha = alpha
         self.gamma = gamma
         self.epsilon = epsilon
-        self.epsilon_min = epsilon_min
         self.epsilon_decay = epsilon_decay
+        self.epsilon_min = epsilon
 
     # e-greedy 정책
     def choose_action(self, state):
