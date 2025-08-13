@@ -70,10 +70,10 @@ class WaterParkEnv:
             #ph +-3.5만큼 변동
             ph_change = random.uniform(-3.0, 3.0) * influx_multiplier
             new_ph = ph + ph_change
-            #탁도 최대 +3만큼 변동
-            new_turbidity = turbidity + random.uniform(2.0, 5.0) * influx_multiplier
-            #암모니아 최대 +1만큼 변동
-            new_ammonia = ammonia + random.uniform(2.0, 7.0) * influx_multiplier
+            #탁도 최대 +5만큼 변동
+            new_turbidity = turbidity + random.uniform(3.0, 5.0) * influx_multiplier
+            #암모니아 최대 +7만큼 변동
+            new_ammonia = ammonia + random.uniform(3.0, 7.0) * influx_multiplier
             self.state = np.array([
                 new_ammonia,
                 new_turbidity,
@@ -102,16 +102,16 @@ class WaterParkEnv:
                 reward = -0.1
         elif exceed_count == 2: #2개 초과
             if action == 1: #교체
-                reward = 0.5
+                reward = 0.6
             else: #유지
-                reward = -0.6
+                reward = -0.7
         elif exceed_count == 3: #3개 모두 초과
             if action == 1: #교체
-                reward = 0.9
+                reward = 0.8
             else: #유지
                 reward = -1.0
         elif self.is_all_optimal(self.state) and action == 0: #모두 정상
-            reward = 0.7 #유지
+            reward = 0.6 #유지
             
         # #모든 수질이 최적인데 물교체(큰 패널티)
         # if self.is_all_optimal(self.state) and action == 1:
@@ -136,7 +136,7 @@ class WaterParkEnv:
         # 기존 reward 산정 이후 아래 패널티 추가
         replace_penalty = 0
         if action == 1:  # 물 교체 시도 시
-            replace_penalty = -0.35 # 교체 한 번 당 페널티
+            replace_penalty = -0.4 # 교체 한 번 당 페널티
         reward += replace_penalty
 
 

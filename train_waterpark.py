@@ -62,20 +62,20 @@ if __name__ == "__main__":
     env = WaterParkEnv()
 
     # Q-러닝 학습, epsilon 0.1로 시작, decay로 점차 감소
-    q_agent = QAgent(epsilon=0.1, epsilon_decay=0.9995, epsilon_min=0.01)
+    q_agent = QAgent(epsilon=0.1, epsilon_decay=0.9995, epsilon_min=0.001)
     fixed_policy = FixedIntervalPolicy()
 
     # Fixed Policy
-    fixed_rewards, fixed_replace, fixed_safety = run_policy_full(env, fixed_policy, quantize=False, episodes=5000)
+    fixed_rewards, fixed_replace, fixed_safety = run_policy_full(env, fixed_policy, quantize=False, episodes=10000)
 
     # Q-Learning
-    q_rewards, q_replace, q_safety = train_qlearning_full(env, q_agent, episodes=5000)
+    q_rewards, q_replace, q_safety = train_qlearning_full(env, q_agent, episodes=10000)
 
     # Greedy Policy 평가 (epsilon=0)
     class GreedyQPolicy:
         def choose_action(self, state):
             return np.argmax(q_agent.Q_table[state])
-    greedy_rewards, greedy_replace, greedy_safety = run_policy_full(env, GreedyQPolicy(), quantize=True, episodes=5000)
+    greedy_rewards, greedy_replace, greedy_safety = run_policy_full(env, GreedyQPolicy(), quantize=True, episodes=10000)
 
     plt.figure(figsize=(14, 5))
 
